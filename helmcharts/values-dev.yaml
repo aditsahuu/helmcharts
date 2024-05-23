@@ -1,0 +1,16 @@
+app:
+  repl: 1
+  metadata:
+    name: ordinst
+  spec:
+    nod: storage
+  image: getallcompany:dev
+  containers:
+    name: insertion-container
+    containerPort: 10006
+  resources:
+    limits:
+      memory: "1024Mi"
+  env:
+    - name: serviceName
+      value: "getallcompany"

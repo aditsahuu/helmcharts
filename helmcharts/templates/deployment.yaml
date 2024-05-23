@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: getallcompany
+spec:
+  replicas: {{ .Values.app.repl }}
+  selector:
+    matchLabels:
+      app: getallcompany
+  template:
+    metadata:
+      labels:
+        app: getallcompany
+    spec:
+      {{- include "helmcharts.nod" . | nindent 6 }}
+      containers:
+      - image: {{ .Values.app.image }}
+        name: {{ .Values.app.containers.name }}
+        ports:
+          - containerPort: {{ .Values.app.containers.containerPort }}
+            name: insertion-prt
+        env:
+          {{- toYaml .Values.app.env | nindent 10 }}
+        envFrom:
+          - configMapRef:
+              name: my-configmap
+        resources:
+          {{- toYaml .Values.app.resources | nindent 10 }} # Specify the memory limit here
